@@ -30,8 +30,9 @@ class OpenAIEnricher(BaseEnricher):
         enriched = contacts.copy()
 
         for column in ENRICHMENT_COLUMNS:
-            enriched[column] = ""
-
+            enriched[column] = None
+             enriched[column] = enriched[column].astype(object)
+             
         for index, row in enriched.iterrows():
 
             name = f"{row.get('first_name', '')} {row.get('last_name', '')}"
@@ -121,7 +122,13 @@ Strategic Value Score must be an integer from 1-10.
             print("FIELDS RECEIVED:")
             print(data.keys())
 
+            
             for column in ENRICHMENT_COLUMNS:
-                enriched.loc[index, column] = data.get(column, "")
+                value = data.get(column, "")
+                
+                if isinstance(value, (dict, list)):
+                    value = json.dumps(value)
 
+                enriched.loc[index, column] = str(value)
+                
         return enriched
