@@ -23,16 +23,14 @@ class OpenAIEnricher(BaseEnricher):
 
         self.researcher = TavilyResearcher()
 
-
     def enrich(self, contacts: pd.DataFrame) -> pd.DataFrame:
 
-# contacts = contacts.head(5)
         enriched = contacts.copy()
 
+        # Create enrichment columns
         for column in ENRICHMENT_COLUMNS:
-            enriched[column] = None
-             enriched[column] = enriched[column].astype(object)
-             
+            enriched[column] = ""
+
         for index, row in enriched.iterrows():
 
             name = f"{row.get('first_name', '')} {row.get('last_name', '')}"
@@ -88,7 +86,10 @@ Return JSON with exactly these fields:
 "Research Notes": ""
 }}
 
-Strategic Value Score must be an integer from 1-10.
+Rules:
+- Strategic Value Score must be an integer from 1-10.
+- Return only JSON.
+- Do not include markdown formatting.
 """
 
             response = self.client.chat.completions.create(
@@ -116,19 +117,21 @@ Strategic Value Score must be an integer from 1-10.
             except json.JSONDecodeError:
                 print("INVALID JSON RESPONSE")
                 print(result)
+
                 enriched.loc[index, "Research Notes"] = result
                 continue
 
             print("FIELDS RECEIVED:")
             print(data.keys())
 
-            
             for column in ENRICHMENT_COLUMNS:
+
                 value = data.get(column, "")
-                
+
                 if isinstance(value, (dict, list)):
                     value = json.dumps(value)
 
                 enriched.loc[index, column] = str(value)
-                
+
         return enriched
+        
