@@ -10,14 +10,9 @@ def write_enriched_contacts(
     output_path: str
 ) -> None:
 
-    output_file = Path(output_path).with_suffix(".xlsx")
+    output_file = Path(output_path)
 
-    print("WRITING EXCEL FILE:", output_file)
-
-    enriched.to_excel(
+    enriched.to_csv(
         output_file,
-        index=False,
-        engine="openpyxl"
+        index=False
     )
-
-    print("EXCEL SAVED")

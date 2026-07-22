@@ -34,6 +34,7 @@ if uploaded_file:
             input_path = Path("uploaded_contacts.csv")
             output_path = Path("enriched_contacts.csv")
 
+
             df.to_csv(
                 input_path,
                 index=False
@@ -59,8 +60,8 @@ if uploaded_file:
             with open(output_path, "rb") as file:
 
                 st.download_button(
-                    label="Download enriched Excel",
+                    label="Download enriched CSV",
                     data=file,
-                    file_name="enriched_contacts.xlsx",
-                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    file_name="enriched_contacts.csv",
+                    mime="text/csv"
                 )
