@@ -1,6 +1,6 @@
 pandas>=2.0.0
-streamlit
-pandas
-openai
-tavily-python
-python-dotenv
+streamlit 
+openai 
+tavily-python 
+python-dotenv 
+openpyxl

@@ -42,7 +42,7 @@ SOURCE_COLUMN_ALIASES: dict[str, tuple[str, ...]] = {
 @dataclass(frozen=True)
 class PipelinePaths:
     input_csv: str = "healthspan_contacts.csv"
-    output_csv: str = "enriched_contacts.csv"
+    output_csv: str = "enriched_contacts.xlsx"
 
 
 @dataclass(frozen=True)

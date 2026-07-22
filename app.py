@@ -59,8 +59,8 @@ if uploaded_file:
             with open(output_path, "rb") as file:
 
                 st.download_button(
-                    label="Download enriched CSV",
+                    label="Download enriched Excel",
                     data=file,
-                    file_name="enriched_contacts.csv",
-                    mime="text/csv"
+                    file_name="enriched_contacts.xlsx",
+                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                 )
